@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Expense Splitter</string>
+    <string name="create_a_expense_group">Create a expense group</string>
+    <string name="view_previous_expense_groups">View previous expense groups</string>
+    <string name="expense_splitter">Expense Splitter</string>
+</resources>
