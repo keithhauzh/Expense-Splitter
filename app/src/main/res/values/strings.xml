@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Expense Splitter</string>
-    <string name="create_a_expense_group">Create a expense group</string>
+    <string name="make_an_expense_group">Make an expense group</string>
     <string name="view_previous_expense_groups">View previous expense groups</string>
     <string name="expense_splitter">Expense Splitter</string>
+    <string name="you_haven_t_made_any_expense_groups_yet">You haven\'t made any expense groups yet</string>
+    <string name="what_were_your_expenses">What were your expenses?</string>
+    <string name="which_of_your_friends_are_paying">Which of your friends are paying?</string>
+    <string name="example_title">example title</string>
+    <string name="example_total_amount">example total amount</string>
 </resources>

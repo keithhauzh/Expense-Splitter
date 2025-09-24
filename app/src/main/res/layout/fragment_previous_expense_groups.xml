@@ -6,7 +6,7 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.PreviousExpenseGroupsFragment">
+    tools:context=".ui.fragments.PreviousGroupsFragment">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -16,7 +16,6 @@
             android:layout_height="match_parent"
             android:layout_margin="16dp"
             />
-
         <LinearLayout
             android:id="@+id/llEmpty"
             android:layout_width="match_parent"
@@ -25,8 +24,24 @@
             android:orientation="vertical"
             >
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:src="@drawable/nothing"
+                android:layout_marginBottom="16dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/you_haven_t_made_any_expense_groups_yet"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mbMake"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/make_an_expense_group"
+                style="@style/BAWButton"
                 />
         </LinearLayout>
     </FrameLayout>
