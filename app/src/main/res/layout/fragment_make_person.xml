@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".ui.fragments.MakePersonFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/which_of_your_friends_are_paying"
+        android:textSize="30sp"
+        android:layout_margin="20dp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BAWButton"
+        android:layout_gravity="start"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="Add person"
+        />
+
+    <FrameLayout
+        android:id="@+id/llWhoPeople"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPeople"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            />
+    </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BAWButton"
+        android:layout_marginBottom="75dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/next"
+        />
+
+</LinearLayout>

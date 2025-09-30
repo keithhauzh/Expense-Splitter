@@ -1,0 +1,66 @@
+package com.keith.expensesplitter.ui.fragments
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.keith.expensesplitter.R
+import com.keith.expensesplitter.databinding.FragmentMakeGroupBinding
+import com.keith.expensesplitter.ui.view_models.MakeGroupViewModel
+import kotlinx.coroutines.launch
+
+class MakeGroupFragment : Fragment() {
+    private lateinit var binding: FragmentMakeGroupBinding
+    private val viewModel: MakeGroupViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        super.onCreate(savedInstanceState)
+        binding = FragmentMakeGroupBinding.inflate(
+            inflater, container, false
+        )
+        return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.mbNext.setOnClickListener {
+            viewModel.addGroup(
+                name = binding.etName.text.toString(),
+                details = binding.etDetails.text.toString()
+            )
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.finish.collect{ groupId ->
+                val action = MakeGroupFragmentDirections
+                    .actionMakeGroupFragmentToMakeExpenseFragment(groupId = groupId)
+                findNavController().navigate(action)
+            }
+        }
+
+        error()
+    }
+
+    private fun error() {
+        lifecycleScope.launch {
+            viewModel.error.collect {
+                val snackbar = Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG)
+                snackbar.setBackgroundTint(
+                    ContextCompat.getColor(requireContext(), R.color.red)
+                )
+                snackbar.show()
+            }
+        }
+    }
+}
