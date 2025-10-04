@@ -19,7 +19,9 @@ import kotlinx.coroutines.launch
 
 class MakeGroupFragment : Fragment() {
     private lateinit var binding: FragmentMakeGroupBinding
-    private val viewModel: MakeGroupViewModel by viewModels()
+    private val viewModel: MakeGroupViewModel by viewModels {
+        MakeGroupViewModel.Factory
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +57,10 @@ class MakeGroupFragment : Fragment() {
     private fun error() {
         lifecycleScope.launch {
             viewModel.error.collect {
-                val snackbar = Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG)
+                val snackbar = Snackbar.make(
+                    binding.root,
+                    it,
+                    Snackbar.LENGTH_LONG)
                 snackbar.setBackgroundTint(
                     ContextCompat.getColor(requireContext(), R.color.red)
                 )

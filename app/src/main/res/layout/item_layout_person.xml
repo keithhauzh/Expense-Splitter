@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EditText xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tvPerson"
-    android:background="@drawable/edit_text_bg"
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
-    android:padding="15dp"
-    android:hint="Person"
-    />
+    >
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:layout_margin="20dp"
+        android:padding="15dp"
+        android:hint="@string/person"
+        android:layout_weight="1"
+        />
+    <ImageView
+        android:id="@+id/ivRemove"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/delete"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="10dp"
+        />
+
+</LinearLayout>
 

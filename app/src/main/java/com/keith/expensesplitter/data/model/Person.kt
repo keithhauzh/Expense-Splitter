@@ -9,14 +9,14 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = Group::class,
             parentColumns = arrayOf("id"),
-            childColumns = arrayOf("groupId'"),
+            childColumns = arrayOf("groupId"),
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
 data class Person (
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Long? = null,
     val name: String,
-    val groupId: Int,
+    val groupId: Long,
 )

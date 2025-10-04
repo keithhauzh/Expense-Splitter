@@ -10,7 +10,6 @@ import com.keith.expensesplitter.data.model.Expense
 import com.keith.expensesplitter.data.repo.ExpensesRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
@@ -36,8 +35,11 @@ class MakeExpenseViewModel (
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val app = this[ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY] as MyApp
-                MakeExpenseViewModel(app.ExpensesRepo)
+                val myRepository =
+                    (this
+                        [ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY]
+                            as MyApp).expensesRepo
+                MakeExpenseViewModel(myRepository)
             }
         }
     }

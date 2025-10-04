@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class MakeGroupViewModel(
     private val repo: GroupsRepo
 ): ViewModel() {
-    private val _finish = MutableSharedFlow<Int>()
+    private val _finish = MutableSharedFlow<Long>()
     val finish = _finish.asSharedFlow()
     private val _error = MutableSharedFlow<String>()
     val error = _error.asSharedFlow()
@@ -36,7 +36,9 @@ class MakeGroupViewModel(
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val myRepository =
-                    (this[ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY] as MyApp).repo
+                    (this
+                        [ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY]
+                            as MyApp).groupsRepo
                 MakeGroupViewModel(myRepository)
             }
         }

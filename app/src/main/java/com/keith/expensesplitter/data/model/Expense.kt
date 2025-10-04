@@ -15,8 +15,8 @@ import androidx.room.PrimaryKey
 )
 data class Expense (
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Long? = null,
     val name: String,
     val amount: Float,
-    val groupId: Int
+    val groupId: Long
 )

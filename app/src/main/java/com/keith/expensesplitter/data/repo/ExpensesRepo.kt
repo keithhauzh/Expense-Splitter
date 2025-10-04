@@ -11,11 +11,11 @@ class ExpensesRepo (
         dao.makeExpense(expense)
     }
 
-    fun getAllExpenses() : Flow<List<Expense>> {
-        return dao.getAllExpenses()
+    fun getExpensesByGroupId(groupId: Long) : Flow<List<Expense>> {
+        return dao.getAllExpenses(groupId)
     }
 
-    fun getExpensesById(id:Int): Expense? {
+    fun getExpensesById(id: Long): Expense? {
         return dao.getExpenseById(id)
     }
 
@@ -23,7 +23,7 @@ class ExpensesRepo (
         dao.update(expense)
     }
 
-    fun deleteExpense(id: Int) {
+    fun deleteExpense(id: Long) {
         dao.delete(id)
     }
 }

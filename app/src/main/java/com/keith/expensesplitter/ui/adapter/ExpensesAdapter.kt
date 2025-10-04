@@ -1,11 +1,12 @@
 package com.keith.expensesplitter.ui.adapter
-
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
 import com.keith.expensesplitter.R
 
 class ExpensesAdapter (
@@ -14,13 +15,42 @@ class ExpensesAdapter (
     private val expenses = mutableListOf<ExpenseView>()
 
     inner class ExpenseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val etName : TextInputEditText = itemView.findViewById(R.id.etName)
-        val etAmount : TextInputEditText = itemView.findViewById(R.id.etAmount)
+        val etName : EditText = itemView.findViewById(R.id.etName)
+        val etAmount : EditText = itemView.findViewById(R.id.etAmount)
         val ivRemove : ImageView = itemView.findViewById(R.id.ivRemove)
 
         fun bind(expense: ExpenseView, position: Int) {
             etName.setText(expense.name)
             etAmount.setText(expense.amount.toString())
+
+            etName.addTextChangedListener(object: TextWatcher{
+                override fun afterTextChanged(s: Editable?) {
+                    expenses[position].name = s.toString()
+                }
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            }
+            )
+
+            etAmount.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    expenses[position].amount = s.toString().toFloatOrNull() ?: 0.0f
+                }
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            }
+            )
+
             ivRemove.setOnClickListener {
                 onRemoveClick(position)
             }
@@ -43,7 +73,7 @@ class ExpensesAdapter (
 
     override fun getItemCount() = expenses.size
 
-    fun addExpense(expense: ExpenseView) {
+    fun makeExpense(expense: ExpenseView) {
         expenses.add(expense)
         notifyItemInserted(expenses.size - 1)
     }
@@ -55,7 +85,9 @@ class ExpensesAdapter (
         }
     }
 
-    fun getExpenses(): List<ExpenseView> = expenses.toList()
+    fun getExpenses(): List<ExpenseView>  {
+        return expenses.map { ExpenseView(it.name, it.amount) }
+    }
 
     data class ExpenseView (
         var name: String = "",

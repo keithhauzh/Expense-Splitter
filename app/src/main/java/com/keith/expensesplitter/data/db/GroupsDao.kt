@@ -16,7 +16,7 @@ interface GroupsDao {
     fun getGroupById(id:Long): Group?
 
     @Insert
-    fun makeGroup(group: Group): Int
+    fun makeGroup(group: Group): Long
 
     @Update
     fun update(group: Group)

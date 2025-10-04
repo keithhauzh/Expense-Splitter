@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class GroupsRepo(
     private val dao: GroupsDao
 ) {
-    fun makeGroup(group: Group): Int {
+    fun makeGroup(group: Group): Long {
         return dao.makeGroup(group)
     }
 
