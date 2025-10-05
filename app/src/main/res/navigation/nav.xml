@@ -32,7 +32,14 @@
         android:id="@+id/previousGroupsFragment"
         android:name="com.keith.expensesplitter.ui.fragments.PreviousGroupsFragment"
         android:label="fragment_previous_expense_groups"
-        tools:layout="@layout/fragment_previous_groups" />
+        tools:layout="@layout/fragment_previous_groups" >
+        <action
+            android:id="@+id/action_previousGroupsFragment_to_makeGroupFragment"
+            app:destination="@id/makeGroupFragment" />
+        <action
+            android:id="@+id/action_previousGroupsFragment_to_displayGroup"
+            app:destination="@id/displayGroup" />
+    </fragment>
 
     <fragment
         android:id="@+id/makeExpenseFragment"
@@ -53,6 +60,13 @@
         <action
             android:id="@+id/action_makePersonFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument android:name="groupId" app:argType="long"/>
+    </fragment>
+    <fragment
+        android:id="@+id/displayGroup"
+        android:name="com.keith.expensesplitter.ui.fragments.DisplayGroupFragment"
+        android:label="fragment_display_group"
+        tools:layout="@layout/fragment_display_group" >
         <argument android:name="groupId" app:argType="long"/>
     </fragment>
 </navigation>

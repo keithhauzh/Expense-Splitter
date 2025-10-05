@@ -8,7 +8,7 @@ data class Group (
     @PrimaryKey(autoGenerate = true)
     val id: Long? = null,
     val name: String,
-    val details: String?,
+    val details: String? = "No Details",
 )
 
 

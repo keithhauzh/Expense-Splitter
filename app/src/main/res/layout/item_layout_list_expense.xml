@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    android:layout_margin="10dp"
+    >
+    <TextView
+        android:id="@+id/tvExpenseItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/expense_name"
+        android:padding="10dp"
+    />
+    <TextView
+        android:id="@+id/tvExpenseItemAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/expense_amount"
+        android:paddingTop="30dp"
+        android:paddingHorizontal="10dp"
+        android:paddingBottom="10dp"
+        />
+</androidx.cardview.widget.CardView>

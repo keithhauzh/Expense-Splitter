@@ -1,5 +1,6 @@
-package com.keith.expensesplitter.ui.adapter
+package com.keith.expensesplitter.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +9,7 @@ import com.keith.expensesplitter.databinding.ItemLayoutGroupBinding
 
 class GroupsAdapter (
     private var groups: List<Group>,
-    private var onClick: (Group) -> Unit
+    private var onRemoveClick: (Group) -> Unit
 ): RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,6 +35,7 @@ class GroupsAdapter (
         notifyDataSetChanged()
     }
 
+
     inner class GroupViewHolder(
         private val binding: ItemLayoutGroupBinding
     ): RecyclerView.ViewHolder(binding.root) {
@@ -41,8 +43,11 @@ class GroupsAdapter (
             binding.run {
                 tvName.text = group.name
                 tvDetails.text = group.details
+                ivEdit.setOnClickListener {
+
+                }
                 llGroup.setOnClickListener {
-                    onClick(group)
+                    onRemoveClick(group)
                 }
             }
         }

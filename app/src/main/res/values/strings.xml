@@ -15,4 +15,13 @@
     <string name="expense_name">Expense Name</string>
     <string name="amount">Amount</string>
     <string name="person">Person</string>
+    <string name="no_groups">no groups..</string>
+    <string name="expenses">Expenses</string>
+    <string name="people">People</string>
+    <string name="each_person_owes_payer_x">Each person owes payer $x</string>
+    <string name="total_expenses_amount_x">Total Expenses amount: $x</string>
+    <string name="expense_amount">Expense Amount</string>
+    <string name="group_details">Group Details</string>
+    <string name="who_is_paying">Who is paying?</string>
+    <string name="add_person">Add person</string>
 </resources>

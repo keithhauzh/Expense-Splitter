@@ -1,5 +1,6 @@
 package com.keith.expensesplitter.ui.fragments
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -22,7 +23,8 @@ class PreviousGroupsViewModel (
 
     fun getGroups() {
         viewModelScope.launch(Dispatchers.IO) {
-            groupsRepo.getAllGroups().collect { groups ->
+            groupsRepo.getAllGroups()?.let { groups ->
+                Log.d("groups-data", groups.toString())
                 _groups.value = groups
             }
         }

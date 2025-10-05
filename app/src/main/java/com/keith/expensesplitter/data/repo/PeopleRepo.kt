@@ -11,7 +11,7 @@ class PeopleRepo (
         dao.makePerson(person)
     }
 
-    fun getPeopleByGroupId(groupId: Long) : Flow<List<Person>> {
+    fun getPeopleByGroupId(groupId: Long) : List<Person> {
         return dao.getPeopleByGroupId(groupId)
     }
 

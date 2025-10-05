@@ -1,4 +1,4 @@
-package com.keith.expensesplitter.ui.adapter
+package com.keith.expensesplitter.ui.adapters
 
 import android.text.Editable
 import android.text.TextWatcher

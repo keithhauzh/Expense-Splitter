@@ -11,7 +11,7 @@ class GroupsRepo(
         return dao.makeGroup(group)
     }
 
-    fun getAllGroups() : Flow<List<Group>> {
+    fun getAllGroups() : List<Group> {
         return dao.getAllGroups()
     }
 

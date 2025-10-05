@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/which_of_your_friends_are_paying"
+        android:text="@string/who_is_paying"
         android:textSize="30sp"
         android:layout_margin="20dp"
         />
@@ -24,7 +24,7 @@
         android:layout_gravity="start"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="30dp"
-        android:text="Add person"
+        android:text="@string/add_person"
         />
 
     <FrameLayout

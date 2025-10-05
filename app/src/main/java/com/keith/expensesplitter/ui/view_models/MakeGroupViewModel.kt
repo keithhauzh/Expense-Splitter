@@ -1,5 +1,6 @@
 package com.keith.expensesplitter.ui.view_models
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -25,6 +26,7 @@ class MakeGroupViewModel(
                 try {
                     require(name.isNotBlank()) {"Name cannot be blank"}
                     val group = Group(name = name, details = details)
+                    Log.d("make_group", group.toString())
                     val groupId = repo.makeGroup(group)
                     _finish.emit(groupId)
                 } catch (e: Exception) {

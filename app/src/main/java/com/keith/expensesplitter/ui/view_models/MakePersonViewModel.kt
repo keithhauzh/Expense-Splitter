@@ -1,5 +1,6 @@
 package com.keith.expensesplitter.ui.view_models
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -25,6 +26,7 @@ class MakePersonViewModel (
         viewModelScope.launch (Dispatchers.IO) {
             try {
                 repo.makePerson(person)
+                Log.d("person-created", person.toString())
                 _finish.emit(Unit)
             } catch (e: Exception) {
                 _error.emit(e.message?: "Could not make person")
