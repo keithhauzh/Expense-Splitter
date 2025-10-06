@@ -44,13 +44,17 @@ class PreviousGroupsFragment : Fragment() {
     }
 
     fun setupAdapter() {
-        adapter = GroupsAdapter(emptyList()) {
-            val action = PreviousGroupsFragmentDirections
-                .actionPreviousGroupsFragmentToDisplayGroup(
-                groupId = it.id!!
-            )
-            findNavController().navigate(action)
-        }
+        adapter = GroupsAdapter(
+            groups = emptyList(),
+            onClick = {
+                val action = PreviousGroupsFragmentDirections
+                    .actionPreviousGroupsFragmentToDisplayGroup(
+                        groupId = it.id!!
+                    )
+                findNavController().navigate(action)
+            } ,
+            viewModel = viewModel
+        )
         binding.rvGroups.layoutManager =
             LinearLayoutManager(requireContext())
             binding.rvGroups.adapter = adapter
