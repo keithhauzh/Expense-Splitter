@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.keith.expensesplitter.data.model.Expense
 import com.keith.expensesplitter.databinding.FragmentMakeExpenseBinding
-import com.keith.expensesplitter.ui.adapter.ExpensesAdapter
+import com.keith.expensesplitter.ui.adapters.ExpensesAdapter
 import com.keith.expensesplitter.ui.view_models.MakeExpenseViewModel
 import kotlinx.coroutines.launch
 import com.keith.expensesplitter.R
@@ -64,7 +64,6 @@ class MakeExpenseFragment : Fragment() {
             val expenses = adapter.getExpenses().filter { expense ->
                 expense.name.isNotBlank() && expense.amount > 0
             }
-            Log.d("debuggin", expenses.toString())
             if (expenses.isNotEmpty()) {
                 savingExpenses(expenses)
             } else {

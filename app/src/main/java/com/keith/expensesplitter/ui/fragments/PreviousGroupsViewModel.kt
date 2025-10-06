@@ -1,5 +1,8 @@
 package com.keith.expensesplitter.ui.fragments
 
+import android.util.Log
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -15,16 +18,22 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class PreviousGroupsViewModel (
-    private val groupsRepo: GroupsRepo,
+    private val repo: GroupsRepo,
 ) : ViewModel() {
     private val _groups = MutableStateFlow<List<Group>>(emptyList())
     val groups = _groups.asStateFlow()
 
     fun getGroups() {
         viewModelScope.launch(Dispatchers.IO) {
-            groupsRepo.getAllGroups().collect { groups ->
+            repo.getAllGroups().let { groups ->
                 _groups.value = groups
             }
+        }
+    }
+
+    fun deleteGroup(id: Long){
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.deleteGroup(id)
         }
     }
 

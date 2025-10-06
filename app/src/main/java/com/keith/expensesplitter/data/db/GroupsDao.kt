@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface GroupsDao {
     @Query("SELECT * FROM `Group`")
-    fun getAllGroups(): Flow<List<Group>>
+    fun getAllGroups(): List<Group>
 
     @Query("SELECT * FROM `Group` WHERE id = :id")
     fun getGroupById(id:Long): Group?

@@ -1,4 +1,4 @@
-package com.keith.expensesplitter.ui.adapter
+package com.keith.expensesplitter.ui.adapters
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -68,7 +68,6 @@ class PeopleAdapter(
     override fun getItemCount() = people.size
 
     fun makePerson(person: PersonView) {
-        Log.d("makePerson", "makePerson")
         people.add(person)
         notifyItemInserted(people.size - 1 )
     }

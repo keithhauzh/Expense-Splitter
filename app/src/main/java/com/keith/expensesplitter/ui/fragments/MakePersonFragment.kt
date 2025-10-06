@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.keith.expensesplitter.databinding.FragmentMakePersonBinding
-import com.keith.expensesplitter.ui.adapter.PeopleAdapter
+import com.keith.expensesplitter.ui.adapters.PeopleAdapter
 import com.keith.expensesplitter.R
 import com.keith.expensesplitter.data.model.Person
 import com.keith.expensesplitter.ui.view_models.MakePersonViewModel
@@ -83,6 +83,13 @@ class MakePersonFragment: Fragment() {
                 )
                 viewModel.makePerson(person)
                 findNavController().popBackStack(R.id.homeFragment, false)
+                val snackbar = Snackbar.make(binding.root,
+                    "Group has been made",
+                    Snackbar.LENGTH_LONG)
+                snackbar.setBackgroundTint(
+                    ContextCompat.getColor(requireContext(), R.color.white)
+                )
+                snackbar.show()
             }
         }
     }
