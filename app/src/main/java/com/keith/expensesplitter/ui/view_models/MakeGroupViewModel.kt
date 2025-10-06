@@ -26,7 +26,6 @@ class MakeGroupViewModel(
                 try {
                     require(name.isNotBlank()) {"Name cannot be blank"}
                     val group = Group(name = name, details = details)
-                    Log.d("make_group", group.toString())
                     val groupId = repo.makeGroup(group)
                     _finish.emit(groupId)
                 } catch (e: Exception) {

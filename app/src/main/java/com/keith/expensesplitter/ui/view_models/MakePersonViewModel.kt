@@ -26,7 +26,6 @@ class MakePersonViewModel (
         viewModelScope.launch (Dispatchers.IO) {
             try {
                 repo.makePerson(person)
-                Log.d("person-created", person.toString())
                 _finish.emit(Unit)
             } catch (e: Exception) {
                 _error.emit(e.message?: "Could not make person")

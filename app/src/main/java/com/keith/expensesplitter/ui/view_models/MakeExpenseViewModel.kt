@@ -26,7 +26,6 @@ class MakeExpenseViewModel (
         viewModelScope.launch (Dispatchers.IO) {
             try {
                 repo.makeExpense(expense)
-                Log.d("expense-created", expense.toString())
                 _finish.emit(Unit)
             } catch (e: Exception) {
                 _error.emit(e.message?: "Could not make expense")

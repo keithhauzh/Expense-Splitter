@@ -68,7 +68,6 @@ class PeopleAdapter(
     override fun getItemCount() = people.size
 
     fun makePerson(person: PersonView) {
-        Log.d("makePerson", "makePerson")
         people.add(person)
         notifyItemInserted(people.size - 1 )
     }

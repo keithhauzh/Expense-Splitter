@@ -1,16 +1,21 @@
 package com.keith.expensesplitter.ui.adapters
 
+import android.app.AlertDialog
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.keith.expensesplitter.data.model.Group
 import com.keith.expensesplitter.databinding.ItemLayoutGroupBinding
+import com.keith.expensesplitter.ui.fragments.PreviousGroupsViewModel
 
 class GroupsAdapter (
     private var groups: List<Group>,
-    private var onRemoveClick: (Group) -> Unit
+    private var onClick: (Group) -> Unit,
+    private var viewModel: PreviousGroupsViewModel
 ): RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>() {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -35,6 +40,24 @@ class GroupsAdapter (
         notifyDataSetChanged()
     }
 
+    fun showDeleteConfirmationDialog(id: Long?, context: Context) {
+        if (id!=null){
+            AlertDialog.Builder(context)
+                .setTitle("Delete confirmation")
+                .setNegativeButton("Delete") {dialog, _ ->
+                    viewModel.deleteGroup(id)
+                    dialog.dismiss()
+                    viewModel.getGroups()
+                }
+                .setPositiveButton("Cancel") {dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }else{
+            Log.d("GroupAdapter", "Could not delete group with null id: $id")
+        }
+    }
+
 
     inner class GroupViewHolder(
         private val binding: ItemLayoutGroupBinding
@@ -46,8 +69,11 @@ class GroupsAdapter (
                 ivEdit.setOnClickListener {
 
                 }
+                ivDelete.setOnClickListener {
+                    showDeleteConfirmationDialog(group.id, binding.root.context)
+                }
                 llGroup.setOnClickListener {
-                    onRemoveClick(group)
+                    onClick(group)
                 }
             }
         }

@@ -64,7 +64,6 @@ class MakeExpenseFragment : Fragment() {
             val expenses = adapter.getExpenses().filter { expense ->
                 expense.name.isNotBlank() && expense.amount > 0
             }
-            Log.d("debuggin", expenses.toString())
             if (expenses.isNotEmpty()) {
                 savingExpenses(expenses)
             } else {
