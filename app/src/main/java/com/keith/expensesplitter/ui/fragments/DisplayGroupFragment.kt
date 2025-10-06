@@ -105,7 +105,7 @@ class DisplayGroupFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.totalAmount.collect { amount ->
                 binding.totalExpenses.text = String.format(
-                    "Total Amount (sum of all expenses): $${amount}"
+                    "Total Amount (sum of all expenses): $%.2f", amount
                 )
             }
         }

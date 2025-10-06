@@ -22,6 +22,9 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
+import java.math.RoundingMode
+import kotlin.math.roundToInt
 
 class DisplayGroupViewModel(
     private val groupsRepo: GroupsRepo,
@@ -73,7 +76,12 @@ class DisplayGroupViewModel(
                 expensesRepo.getExpensesByGroupId(id).let { expenses ->
                     val totalAmount = expenses.sumOf { it.amount.toDouble() }
                     _totalAmount.value = totalAmount
-                    _amountPerPerson.value = totalAmount/peopleSize
+                    if(peopleSize==0){
+                        _amountPerPerson.value = totalAmount
+                    }else{
+                        _amountPerPerson.value = BigDecimal(totalAmount).divide(BigDecimal(peopleSize), 2,
+                            RoundingMode.HALF_UP).toDouble()
+                    }
                 }
             }
         }

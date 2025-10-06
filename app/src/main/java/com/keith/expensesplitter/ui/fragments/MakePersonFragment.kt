@@ -83,6 +83,13 @@ class MakePersonFragment: Fragment() {
                 )
                 viewModel.makePerson(person)
                 findNavController().popBackStack(R.id.homeFragment, false)
+                val snackbar = Snackbar.make(binding.root,
+                    "Group has been made",
+                    Snackbar.LENGTH_LONG)
+                snackbar.setBackgroundTint(
+                    ContextCompat.getColor(requireContext(), R.color.white)
+                )
+                snackbar.show()
             }
         }
     }

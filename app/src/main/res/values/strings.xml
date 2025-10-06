@@ -24,4 +24,8 @@
     <string name="group_details">Group Details</string>
     <string name="who_is_paying">Who is paying?</string>
     <string name="add_person">Add person</string>
+    <string name="edit_group_name">Edit Group Name</string>
+    <string name="edit_group_details">Edit Group Details</string>
+    <string name="done">Done</string>
+    <string name="an_app_made_for_splitting_expenses_equally">a mobile application made for splitting expenses equally</string>
 </resources>

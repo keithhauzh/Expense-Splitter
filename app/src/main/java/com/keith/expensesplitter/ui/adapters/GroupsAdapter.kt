@@ -5,9 +5,12 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.keith.expensesplitter.data.model.Group
 import com.keith.expensesplitter.databinding.ItemLayoutGroupBinding
+import com.keith.expensesplitter.ui.fragments.PreviousGroupsFragmentDirections
 import com.keith.expensesplitter.ui.fragments.PreviousGroupsViewModel
 
 class GroupsAdapter (
@@ -58,6 +61,15 @@ class GroupsAdapter (
         }
     }
 
+    fun showEditDialog(id: Long?, root: CardView) {
+        if(id!=null) {
+            val action = PreviousGroupsFragmentDirections.actionPreviousGroupsFragmentToEditGroupDialogFragment(id)
+            root.findNavController().navigate(action)
+        }else{
+            Log.d("GroupsAdapter", "Could not find group with null id: $id")
+        }
+    }
+
 
     inner class GroupViewHolder(
         private val binding: ItemLayoutGroupBinding
@@ -67,7 +79,7 @@ class GroupsAdapter (
                 tvName.text = group.name
                 tvDetails.text = group.details
                 ivEdit.setOnClickListener {
-
+                    showEditDialog(group.id, binding.root)
                 }
                 ivDelete.setOnClickListener {
                     showDeleteConfirmationDialog(group.id, binding.root.context)

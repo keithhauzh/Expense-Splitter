@@ -24,12 +24,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit Group Name"
+                android:text="@string/edit_group_name"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="5dp"
                 />
             <EditText
+                android:id="@+id/etEditName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_bg"
@@ -38,16 +39,27 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit Group Details"
+                android:text="@string/edit_group_details"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="5dp"
                 />
             <EditText
+                android:id="@+id/etEditDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_bg"
-                android:layout_marginBottom="10sp"
+                android:layout_marginBottom="25dp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mbDone"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="20dp"
+                style="@style/BAWButton"
+                android:text="@string/done"
                 />
         </LinearLayout>
 
