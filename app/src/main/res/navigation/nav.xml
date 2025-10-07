@@ -12,10 +12,20 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_makeGroupFragment"
-            app:destination="@id/makeGroupFragment" />
+            app:destination="@id/makeGroupFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_left"
+            app:popExitAnim="@anim/to_right"
+            />
         <action
             android:id="@+id/action_homeFragment_to_previousGroupsFragment"
-            app:destination="@id/previousGroupsFragment" />
+            app:destination="@id/previousGroupsFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_left"
+            app:popExitAnim="@anim/to_right"
+            />
     </fragment>
 
     <fragment
@@ -25,7 +35,12 @@
         tools:layout="@layout/fragment_make_group" >
         <action
             android:id="@+id/action_makeGroupFragment_to_makeExpenseFragment"
-            app:destination="@id/makeExpenseFragment" />
+            app:destination="@id/makeExpenseFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_left"
+            app:popExitAnim="@anim/to_right"
+            />
     </fragment>
     <fragment
         android:id="@+id/makeExpenseFragment"
@@ -34,16 +49,18 @@
         tools:layout="@layout/fragment_make_expense" >
         <action
             android:id="@+id/action_makeExpenseFragment_to_makePersonFragment"
-            app:destination="@id/makePersonFragment" />
+            app:destination="@id/makePersonFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_left"
+            app:popExitAnim="@anim/to_right"
+            />
     </fragment>
     <fragment
         android:id="@+id/makePersonFragment"
         android:name="com.keith.expensesplitter.ui.fragments.MakePersonFragment"
         android:label="fragment_make_person"
         tools:layout="@layout/fragment_make_person" >
-        <action
-            android:id="@+id/action_makePersonFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
@@ -53,13 +70,24 @@
         tools:layout="@layout/fragment_previous_groups" >
         <action
             android:id="@+id/action_previousGroupsFragment_to_makeGroupFragment"
-            app:destination="@id/makeGroupFragment" />
+            app:destination="@id/makeGroupFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_left"
+            app:popExitAnim="@anim/to_right"
+            />
         <action
             android:id="@+id/action_previousGroupsFragment_to_displayGroup"
-            app:destination="@id/displayGroup" />
+            app:destination="@id/displayGroup"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/from_left"
+            app:popEnterAnim="@anim/to_left"
+            app:popExitAnim="@anim/to_right"
+            />
         <action
             android:id="@+id/action_previousGroupsFragment_to_editGroupDialogFragment"
-            app:destination="@id/editGroupDialogFragment" />
+            app:destination="@id/editGroupDialogFragment"
+            />
     </fragment>
 
 
@@ -72,12 +100,12 @@
             app:argType="long"
             />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/editGroupDialogFragment"
         android:name="com.keith.expensesplitter.ui.fragments.EditGroupDialogFragment"
         android:label="fragment_edit_group_dialog"
         tools:layout="@layout/fragment_edit_group_dialog" >
         <argument android:name="groupId"
             app:argType="long" />
-    </fragment>
+    </dialog>
 </navigation>
