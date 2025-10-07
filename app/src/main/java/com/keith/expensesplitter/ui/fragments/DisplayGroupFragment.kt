@@ -50,6 +50,7 @@ class DisplayGroupFragment : Fragment() {
         viewModel.loadPeople(id)
 
         getTotalAmount()
+        getNumberOfPeople()
         getAmountPerPerson()
         setupObservers()
     }
@@ -105,7 +106,17 @@ class DisplayGroupFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.totalAmount.collect { amount ->
                 binding.totalExpenses.text = String.format(
-                    "Total Amount (sum of all expenses): $%.2f", amount
+                    "$%.2f", amount
+                )
+            }
+        }
+    }
+
+    private fun getNumberOfPeople(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.numberOfPeople.collect { number ->
+                binding.tvNumberOfPeople.text = String.format(
+                    "${number}"
                 )
             }
         }
@@ -115,7 +126,7 @@ class DisplayGroupFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.amountPerPerson.collect { amount ->
                 binding.eachPerson.text = String.format(
-                    "Each person owes payer $${amount}"
+                    "$${amount}"
                 )
             }
         }

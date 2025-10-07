@@ -18,8 +18,8 @@
     <string name="no_groups">no groups..</string>
     <string name="expenses">Expenses</string>
     <string name="people">People</string>
-    <string name="each_person_owes_payer_x">Each person owes payer $x</string>
-    <string name="total_expenses_amount_x">Total Expenses amount: $x</string>
+    <string name="each_person_owes_payer_x">Each person owes payer:</string>
+    <string name="total_expenses_amount_x">Total Expenses amount:</string>
     <string name="expense_amount">Expense Amount</string>
     <string name="group_details">Group Details</string>
     <string name="who_is_paying">Who is paying?</string>
@@ -28,4 +28,7 @@
     <string name="edit_group_details">Edit Group Details</string>
     <string name="done">Done</string>
     <string name="an_app_made_for_splitting_expenses_equally">a mobile application made for splitting expenses equally</string>
+    <string name="number_of_people">Number of People:</string>
+    <string name="test">test</string>
+    <string name="done_complete_group">Done (Complete Group)</string>
 </resources>

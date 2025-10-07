@@ -20,6 +20,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
@@ -37,6 +39,8 @@ class DisplayGroupViewModel(
     val expenses: StateFlow<List<Expense>> = _expenses
     private val _people = MutableStateFlow<List<Person>>(emptyList())
     val people: StateFlow<List<Person>> = _people
+    private val _numberOfPeople = MutableStateFlow<Int>(0)
+    val numberOfPeople = _numberOfPeople.asStateFlow()
     private val _finish = MutableSharedFlow<Unit>()
     val finish: SharedFlow<Unit> = _finish
     private val _totalAmount = MutableStateFlow<Double>(0.0)
@@ -64,7 +68,8 @@ class DisplayGroupViewModel(
         viewModelScope.launch (Dispatchers.IO) {
             peopleRepo.getPeopleByGroupId(id).let {
                 _people.value = it
-                Log .d("people", _people.toString())
+                _numberOfPeople.value = it.size
+                Log.d("numberOfPeople", _numberOfPeople.value.toString())
             }
         }
     }

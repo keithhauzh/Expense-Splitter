@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.DisplayGroupFragment"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.DisplayGroupFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,26 +24,39 @@
             android:id="@+id/groupDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:text="@string/group_details"
-            android:paddingBottom="60dp"
             />
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerThickness="2sp"
+            android:layout_marginBottom="30dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/expenses"
+            android:textSize="19sp"
             android:textStyle="bold"
             />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvExpenses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp" />
+            android:layout_marginBottom="35dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/people"
+            android:textSize="19sp"
             android:textStyle="bold"
             />
         <androidx.recyclerview.widget.RecyclerView
@@ -54,26 +66,79 @@
             android:layout_marginBottom="50dp"
             />
 
-        <LinearLayout
+        <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            app:dividerThickness="2sp"
+            android:layout_marginBottom="30dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Summary/Calculation"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:layout_marginBottom="10dp"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            android:layout_margin="5dp"
             >
-            <TextView
-                android:id="@+id/totalExpenses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="@string/total_expenses_amount_x"
-                android:layout_marginBottom="10dp"
-                />
-            <TextView
-                android:id="@+id/eachPerson"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="@string/each_person_owes_payer_x"
-                />
-        </LinearLayout>
+                android:orientation="vertical"
+                android:padding="30dp"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/total_expenses_amount_x"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:id="@+id/totalExpenses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test"
+                    android:layout_marginBottom="20dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="@string/number_of_people"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:id="@+id/tvNumberOfPeople"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test"
+                    android:layout_marginBottom="20dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:text="@string/each_person_owes_payer_x"
+                    />
+                <TextView
+                    android:id="@+id/eachPerson"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test"
+                    />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </ScrollView>
