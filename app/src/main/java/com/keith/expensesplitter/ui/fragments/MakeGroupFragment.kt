@@ -1,6 +1,7 @@
 package com.keith.expensesplitter.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.keith.expensesplitter.R
 import com.keith.expensesplitter.databinding.FragmentMakeGroupBinding
 import com.keith.expensesplitter.ui.view_models.ActivityViewModel
-import com.keith.expensesplitter.ui.view_models.GroupCreationViewModel
 import com.keith.expensesplitter.ui.view_models.MakeGroupViewModel
 import kotlinx.coroutines.launch
 
@@ -22,7 +22,10 @@ class MakeGroupFragment : Fragment() {
     private lateinit var binding: FragmentMakeGroupBinding
 
     private val viewModel: MakeGroupViewModel by viewModels()
-    private val activityViewModel: ActivityViewModel by activityViewModels()
+
+    private val activityViewModel: ActivityViewModel by activityViewModels{
+        ActivityViewModel.Factory
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +40,14 @@ class MakeGroupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.resetGroup()
         next()
         observeGroupCreation()
-        observeErrors()
     }
 
     private fun next(){
         binding.mbNext.setOnClickListener {
+            observeErrors()
             viewModel.makeGroup(
                 name = binding.etName.text.toString(),
                 details = binding.etDetails.text.toString()
@@ -54,6 +58,7 @@ class MakeGroupFragment : Fragment() {
     private fun observeGroupCreation() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.group.collect{ group ->
+                Log.d("group-created", group.toString())
                 group?.let {
                     activityViewModel.holdGroup(it)
                     navigateToMakeExpenses()
@@ -65,7 +70,7 @@ class MakeGroupFragment : Fragment() {
     private fun observeErrors() {
         lifecycleScope.launch {
             viewModel.error.collect { error  ->
-                error?.let { error ->
+                if(error.isNotBlank()){
                     showErrors(error)
                 }
             }
@@ -76,6 +81,7 @@ class MakeGroupFragment : Fragment() {
         val action = MakeGroupFragmentDirections
             .actionMakeGroupFragmentToMakeExpenseFragment()
         findNavController().navigate(action)
+        viewModel.resetGroup()
     }
 
     private fun showErrors(error: String){

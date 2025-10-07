@@ -13,9 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_makeGroupFragment"
             app:destination="@id/makeGroupFragment" />
-<!--        <action-->
-<!--            android:id="@+id/action_homeFragment_to_previousGroupsFragment"-->
-<!--            app:destination="@id/previousGroupsFragment" />-->
+        <action
+            android:id="@+id/action_homeFragment_to_previousGroupsFragment"
+            app:destination="@id/previousGroupsFragment" />
     </fragment>
 
     <fragment
@@ -46,35 +46,38 @@
             app:destination="@id/homeFragment" />
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/previousGroupsFragment"-->
-<!--        android:name="com.keith.expensesplitter.ui.fragments.PreviousGroupsFragment"-->
-<!--        android:label="fragment_previous_expense_groups"-->
-<!--        tools:layout="@layout/fragment_previous_groups" >-->
-<!--        <action-->
-<!--            android:id="@+id/action_previousGroupsFragment_to_makeGroupFragment"-->
-<!--            app:destination="@id/makeGroupFragment" />-->
-<!--        <action-->
-<!--            android:id="@+id/action_previousGroupsFragment_to_displayGroup"-->
-<!--            app:destination="@id/displayGroup" />-->
-<!--        <action-->
-<!--            android:id="@+id/action_previousGroupsFragment_to_editGroupDialogFragment"-->
-<!--            app:destination="@id/editGroupDialogFragment" />-->
-<!--    </fragment>-->
+    <fragment
+        android:id="@+id/previousGroupsFragment"
+        android:name="com.keith.expensesplitter.ui.fragments.PreviousGroupsFragment"
+        android:label="fragment_previous_expense_groups"
+        tools:layout="@layout/fragment_previous_groups" >
+        <action
+            android:id="@+id/action_previousGroupsFragment_to_makeGroupFragment"
+            app:destination="@id/makeGroupFragment" />
+        <action
+            android:id="@+id/action_previousGroupsFragment_to_displayGroup"
+            app:destination="@id/displayGroup" />
+        <action
+            android:id="@+id/action_previousGroupsFragment_to_editGroupDialogFragment"
+            app:destination="@id/editGroupDialogFragment" />
+    </fragment>
 
 
-<!--    <fragment-->
-<!--        android:id="@+id/displayGroup"-->
-<!--        android:name="com.keith.expensesplitter.ui.fragments.DisplayGroupFragment"-->
-<!--        android:label="fragment_display_group"-->
-<!--        tools:layout="@layout/fragment_display_group" >-->
-<!--    </fragment>-->
-<!--    <fragment-->
-<!--        android:id="@+id/editGroupDialogFragment"-->
-<!--        android:name="com.keith.expensesplitter.ui.fragments.EditGroupDialogFragment"-->
-<!--        android:label="fragment_edit_group_dialog"-->
-<!--        tools:layout="@layout/fragment_edit_group_dialog" >-->
-<!--        <argument android:name="group"-->
-<!--            app:argType="com.keith.expensesplitter.data.model.Group" />-->
-<!--    </fragment>-->
+    <fragment
+        android:id="@+id/displayGroup"
+        android:name="com.keith.expensesplitter.ui.fragments.DisplayGroupFragment"
+        android:label="fragment_display_group"
+        tools:layout="@layout/fragment_display_group" >
+        <argument android:name="groupId"
+            app:argType="long"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/editGroupDialogFragment"
+        android:name="com.keith.expensesplitter.ui.fragments.EditGroupDialogFragment"
+        android:label="fragment_edit_group_dialog"
+        tools:layout="@layout/fragment_edit_group_dialog" >
+        <argument android:name="groupId"
+            app:argType="long" />
+    </fragment>
 </navigation>

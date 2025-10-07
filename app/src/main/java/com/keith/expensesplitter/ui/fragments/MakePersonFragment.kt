@@ -1,6 +1,7 @@
 package com.keith.expensesplitter.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,16 +19,18 @@ import com.keith.expensesplitter.ui.adapters.PeopleAdapter
 import com.keith.expensesplitter.R
 import com.keith.expensesplitter.data.model.Person
 import com.keith.expensesplitter.ui.view_models.ActivityViewModel
-import com.keith.expensesplitter.ui.view_models.GroupCreationViewModel
 import com.keith.expensesplitter.ui.view_models.MakePersonViewModel
 import kotlinx.coroutines.launch
 
 class MakePersonFragment: Fragment() {
     private lateinit var binding: FragmentMakePersonBinding
     private val viewModel: MakePersonViewModel by viewModels()
-    private val activityViewModel: ActivityViewModel by activityViewModels()
+    private val activityViewModel: ActivityViewModel by activityViewModels{
+        ActivityViewModel.Factory
+    }
 
     private lateinit var adapter: PeopleAdapter
+    private var hasSavedPeople = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,11 +46,13 @@ class MakePersonFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.resetPeople()
+        hasSavedPeople = false
         setupAdapter()
         error()
         setupClickListeners()
+        observePeopleCreation()
         adapter.makePerson(PeopleAdapter.PersonView())
-
     }
 
     fun setupAdapter() {
@@ -67,7 +72,10 @@ class MakePersonFragment: Fragment() {
                 person.name.isNotBlank()
             }
             if(people.isNotEmpty()) {
-                savingPeople(people)
+                if(!hasSavedPeople){
+                    savingPeople(people)
+                    hasSavedPeople = true
+                }
             } else {
                 ifPeopleEmpty()
             }
@@ -78,23 +86,20 @@ class MakePersonFragment: Fragment() {
             people.forEach { personView ->
                 viewModel.makePerson(personView.name)
             }
-            finish()
         }
     }
 
     private fun observePeopleCreation() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.people.collect { people ->
-                people?.let {
-                    activityViewModel.holdPeople(it)
-                    complete()
+                people.let {
+                    if(it.isNotEmpty()){
+                        activityViewModel.holdPeople(it)
+                        finish()
+                    }
                 }
             }
         }
-    }
-
-    private fun complete(){
-
     }
 
     private fun ifPeopleEmpty(){
@@ -104,17 +109,18 @@ class MakePersonFragment: Fragment() {
             Snackbar.LENGTH_LONG
         )
         snackbar.setBackgroundTint(
-            ContextCompat.getColor(requireContext(), R.color.green)
+            ContextCompat.getColor(requireContext(), R.color.red)
         )
         snackbar.show()
     }
 
     private fun finish() {
-        viewModel.complete()
+        activityViewModel.complete()
         findNavController().popBackStack(
             R.id.homeFragment,
             false
         )
+        viewModel.resetPeople()
         success()
     }
 
@@ -132,17 +138,24 @@ class MakePersonFragment: Fragment() {
 
     private fun error() {
         lifecycleScope.launch {
-            viewModel.error.collect {
-                val snackbar = Snackbar.make(
-                    binding.root,
-                    it,
-                    Snackbar.LENGTH_LONG
-                )
-                snackbar.setBackgroundTint(
-                    ContextCompat.getColor(requireContext(), R.color.red)
-                )
-                snackbar.show()
+            viewModel.error.collect { error ->
+                if(error.isNotBlank()){
+                    showError(error)
+                    hasSavedPeople=false
+                }
             }
         }
+    }
+
+    private fun showError(error: String){
+        val snackbar = Snackbar.make(
+            binding.root,
+            error,
+            Snackbar.LENGTH_LONG
+        )
+        snackbar.setBackgroundTint(
+            ContextCompat.getColor(requireContext(), R.color.red)
+        )
+        snackbar.show()
     }
 }

@@ -2,6 +2,7 @@ package com.keith.expensesplitter.ui.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +18,15 @@ import com.keith.expensesplitter.ui.adapters.ExpensesAdapter
 import kotlinx.coroutines.launch
 import com.keith.expensesplitter.R
 import com.keith.expensesplitter.ui.view_models.ActivityViewModel
-import com.keith.expensesplitter.ui.view_models.GroupCreationViewModel
 import com.keith.expensesplitter.ui.view_models.MakeExpenseViewModel
 
 class MakeExpenseFragment : Fragment() {
     private lateinit var binding: FragmentMakeExpenseBinding
     private val viewModel: MakeExpenseViewModel by viewModels()
-    private val activityViewModel: ActivityViewModel by activityViewModels()
+
+    private val activityViewModel: ActivityViewModel by activityViewModels{
+        ActivityViewModel.Factory
+    }
     private lateinit var adapter: ExpensesAdapter
 
     override fun onCreateView(
@@ -39,10 +42,10 @@ class MakeExpenseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.resetExpenses()
         setupAdapter()
-        error()
-        setupClickListeners()
         observeExpensesCreation()
+        setupClickListeners()
         adapter.makeExpense(ExpensesAdapter.ExpenseView())
     }
 
@@ -64,6 +67,7 @@ class MakeExpenseFragment : Fragment() {
             }
             if (expenses.isNotEmpty()) {
                 savingExpenses(expenses)
+                error()
             } else {
                 atLeastOneExpense()
             }
@@ -73,7 +77,8 @@ class MakeExpenseFragment : Fragment() {
     private fun savingExpenses(expenses: List<ExpensesAdapter.ExpenseView>) {
         lifecycleScope.launch {
             expenses.forEach { expenseView ->
-                viewModel.makeExpense(expenseView.name, expenseView.amount)
+                viewModel.makeExpense(expenseView.name,
+                    expenseView.amount)
             }
         }
     }
@@ -81,9 +86,14 @@ class MakeExpenseFragment : Fragment() {
     private fun observeExpensesCreation() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.expenses.collect { expenses ->
-                expenses?.let {
-                    activityViewModel.holdExpenses(it)
-                    navigateToMakePeople()
+                Log.d("expenses-created", String.format("$expenses"))
+                if (expenses.isNotEmpty()){
+                    expenses.let {
+                        activityViewModel.holdExpenses(it)
+                        navigateToMakePeople()
+                    }
+                }else{
+                    error()
                 }
             }
         }
@@ -93,12 +103,13 @@ class MakeExpenseFragment : Fragment() {
         val action = MakeExpenseFragmentDirections
             .actionMakeExpenseFragmentToMakePersonFragment()
         findNavController().navigate(action)
+        viewModel.resetExpenses()
     }
 
-    private fun atLeastOneExpense() {
+    private fun showError(message: String){
         val snackbar = Snackbar.make(
             binding.root,
-            "Please put down at least one expense",
+            message,
             Snackbar.LENGTH_LONG
         )
         snackbar.setBackgroundTint(
@@ -106,20 +117,17 @@ class MakeExpenseFragment : Fragment() {
         )
         snackbar.show()
     }
-
+    private fun atLeastOneExpense() {
+        showError("Please put down at least one expense")
+    }
     private fun error() {
         lifecycleScope.launch {
-            viewModel.error.collect {
-                val snackbar = Snackbar.make(
-                    binding.root,
-                    it,
-                    Snackbar.LENGTH_LONG
-                )
-                snackbar.setBackgroundTint(
-                    ContextCompat.getColor(requireContext(), R.color.red)
-                )
-                snackbar.show()
+            viewModel.error.collect { error ->
+                if(error.isNotBlank()){
+                    showError(error)
+                }
             }
         }
     }
+
 }

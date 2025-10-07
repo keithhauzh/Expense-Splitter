@@ -34,9 +34,9 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToMakeGroupFragment()
             navController.navigate(action)
         }
-//        binding.mbView.setOnClickListener {
-//            val action = HomeFragmentDirections.actionHomeFragmentToPreviousGroupsFragment()
-//            navController.navigate(action)
-//        }
+        binding.mbView.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToPreviousGroupsFragment()
+            navController.navigate(action)
+        }
     }
 }

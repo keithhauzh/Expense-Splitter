@@ -1,6 +1,5 @@
 package com.keith.expensesplitter.ui.view_models
 
-import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +24,13 @@ class MakeGroupViewModel: ViewModel() {
             } catch (e: Exception){
                 _error.emit(e.message?: "Could not make group")
             }
+        }
+    }
+
+    fun resetGroup(){
+        _group.value = null
+        viewModelScope.launch {
+            _error.emit("")
         }
     }
 }

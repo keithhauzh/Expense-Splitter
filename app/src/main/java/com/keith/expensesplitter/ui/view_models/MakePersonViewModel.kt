@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.keith.expensesplitter.MyApp
-import com.keith.expensesplitter.data.model.Person
 import com.keith.expensesplitter.data.repo.PeopleRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,18 +16,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class onePerson(val name: String)
-class MakePersonViewModel (
-    private val repo: PeopleRepo
-): ViewModel() {
+class MakePersonViewModel: ViewModel() {
     private val _people = MutableStateFlow<List<onePerson>>(emptyList())
     val people = _people.asStateFlow()
     private val _error = MutableSharedFlow<String>()
     val error = _error.asSharedFlow()
 
-    fun makePerson(person: Person){
+    fun makePerson(name: String){
         viewModelScope.launch (Dispatchers.IO) {
             try {
-                val onePerson = onePerson(person.name)
+                val onePerson = onePerson(name)
                 _people.update { currentPeople->
                     currentPeople + onePerson
                 }
@@ -38,15 +35,10 @@ class MakePersonViewModel (
         }
     }
 
-    companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val myRepository =
-                    (this
-                           [ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY]
-                            as MyApp).peopleRepo
-                MakePersonViewModel(myRepository)
-            }
+    fun resetPeople(){
+        _people.value = emptyList()
+        viewModelScope.launch {
+            _error.emit("")
         }
     }
 }

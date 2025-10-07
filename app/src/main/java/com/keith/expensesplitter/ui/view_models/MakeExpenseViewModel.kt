@@ -32,14 +32,10 @@ class MakeExpenseViewModel: ViewModel() {
         }
     }
 
-    fun finishMake() {
-        viewModelScope.launch (Dispatchers.IO){
-            val currentExpenses = _expenses.value
-            if(currentExpenses.isEmpty()){
-                _error.emit("Please add at least one expense before finishing")
-            }else{
-                _finish.emit(currentExpenses)
-            }
+    fun resetExpenses(){
+        _expenses.value = emptyList()
+        viewModelScope.launch {
+            _error.emit("")
         }
     }
 }
