@@ -2,16 +2,13 @@ package com.keith.expensesplitter.ui.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.collection.buildIntIntMap
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.keith.expensesplitter.R
@@ -44,7 +41,10 @@ class EditGroupDialogFragment : DialogFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.finish.collect {
-                findNavController().popBackStack(R.id.previousGroupsFragment, false)
+                setFragmentResult("edit_group", Bundle().apply {
+                    putBoolean("refresh_needed", true)
+                })
+                dismiss()
             }
         }
 

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -35,6 +36,11 @@ class PreviousGroupsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
         displayGroups()
+        setFragmentResultListener("edit_group"){_, bundle ->
+            if(bundle.getBoolean("refresh_needed",false)){
+                viewModel.getGroups()
+            }
+        }
         binding.mbMake.setOnClickListener {
             val action = PreviousGroupsFragmentDirections
                 .actionPreviousGroupsFragmentToMakeGroupFragment()
