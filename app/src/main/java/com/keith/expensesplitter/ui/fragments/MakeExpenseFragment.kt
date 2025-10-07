@@ -8,24 +8,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.keith.expensesplitter.data.model.Expense
 import com.keith.expensesplitter.databinding.FragmentMakeExpenseBinding
 import com.keith.expensesplitter.ui.adapters.ExpensesAdapter
-import com.keith.expensesplitter.ui.view_models.MakeExpenseViewModel
 import kotlinx.coroutines.launch
 import com.keith.expensesplitter.R
+import com.keith.expensesplitter.ui.view_models.ActivityViewModel
+import com.keith.expensesplitter.ui.view_models.MakeExpenseViewModel
 
 class MakeExpenseFragment : Fragment() {
     private lateinit var binding: FragmentMakeExpenseBinding
-    private val args: MakeExpenseFragmentArgs by navArgs()
-    private val groupId: Long get() = args.groupId
-    private val viewModel: MakeExpenseViewModel by viewModels {
-        MakeExpenseViewModel.Factory
+    private val viewModel: MakeExpenseViewModel by viewModels()
+
+    private val activityViewModel: ActivityViewModel by activityViewModels{
+        ActivityViewModel.Factory
     }
     private lateinit var adapter: ExpensesAdapter
 
@@ -42,8 +42,9 @@ class MakeExpenseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.resetExpenses()
         setupAdapter()
-        error()
+        observeExpensesCreation()
         setupClickListeners()
         adapter.makeExpense(ExpensesAdapter.ExpenseView())
     }
@@ -66,6 +67,7 @@ class MakeExpenseFragment : Fragment() {
             }
             if (expenses.isNotEmpty()) {
                 savingExpenses(expenses)
+                error()
             } else {
                 atLeastOneExpense()
             }
@@ -75,23 +77,41 @@ class MakeExpenseFragment : Fragment() {
     private fun savingExpenses(expenses: List<ExpensesAdapter.ExpenseView>) {
         lifecycleScope.launch {
             expenses.forEach { expenseView ->
-                val expense = Expense(
-                    name = expenseView.name,
-                    amount = expenseView.amount,
-                    groupId = groupId
+                viewModel.makeExpense(
+                    expenseView.name,
+                    expenseView.amount.toLong()
                 )
-                viewModel.makeExpense(expense)
             }
-            val action = MakeExpenseFragmentDirections
-                .actionMakeExpenseFragmentToMakePersonFragment(groupId = groupId)
-            findNavController().navigate(action)
         }
     }
 
-    private fun atLeastOneExpense() {
+    private fun observeExpensesCreation() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.expenses.collect { expenses ->
+                Log.d("expenses-created", String.format("$expenses"))
+                if (expenses.isNotEmpty()){
+                    expenses.let {
+                        activityViewModel.holdExpenses(it)
+                        navigateToMakePeople()
+                    }
+                }else{
+                    error()
+                }
+            }
+        }
+    }
+
+    private fun navigateToMakePeople(){
+        val action = MakeExpenseFragmentDirections
+            .actionMakeExpenseFragmentToMakePersonFragment()
+        findNavController().navigate(action)
+        viewModel.resetExpenses()
+    }
+
+    private fun showError(message: String){
         val snackbar = Snackbar.make(
             binding.root,
-            "Please put down at least one expense",
+            message,
             Snackbar.LENGTH_LONG
         )
         snackbar.setBackgroundTint(
@@ -99,20 +119,17 @@ class MakeExpenseFragment : Fragment() {
         )
         snackbar.show()
     }
-
+    private fun atLeastOneExpense() {
+        showError("Please put down at least one expense")
+    }
     private fun error() {
         lifecycleScope.launch {
-            viewModel.error.collect {
-                val snackbar = Snackbar.make(
-                    binding.root,
-                    it,
-                    Snackbar.LENGTH_LONG
-                )
-                snackbar.setBackgroundTint(
-                    ContextCompat.getColor(requireContext(), R.color.red)
-                )
-                snackbar.show()
+            viewModel.error.collect { error ->
+                if(error.isNotBlank()){
+                    showError(error)
+                }
             }
         }
     }
+
 }

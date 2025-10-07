@@ -63,7 +63,8 @@ class GroupsAdapter (
 
     fun showEditDialog(id: Long?, root: CardView) {
         if(id!=null) {
-            val action = PreviousGroupsFragmentDirections.actionPreviousGroupsFragmentToEditGroupDialogFragment(id)
+            val action = PreviousGroupsFragmentDirections
+                .actionPreviousGroupsFragmentToEditGroupDialogFragment(id)
             root.findNavController().navigate(action)
         }else{
             Log.d("GroupsAdapter", "Could not find group with null id: $id")

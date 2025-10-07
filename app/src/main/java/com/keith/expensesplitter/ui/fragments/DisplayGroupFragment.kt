@@ -20,9 +20,9 @@ class DisplayGroupFragment : Fragment() {
         DisplayGroupViewModel.Factory
     }
     private lateinit var binding: FragmentDisplayGroupBinding
-    private val args: DisplayGroupFragmentArgs by navArgs()
     private lateinit var expensesListAdapter: ExpensesListAdapter
     private lateinit var peopleListAdapter: PeopleListAdapter
+    private val args: DisplayGroupFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
