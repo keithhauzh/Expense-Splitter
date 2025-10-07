@@ -77,8 +77,10 @@ class MakeExpenseFragment : Fragment() {
     private fun savingExpenses(expenses: List<ExpensesAdapter.ExpenseView>) {
         lifecycleScope.launch {
             expenses.forEach { expenseView ->
-                viewModel.makeExpense(expenseView.name,
-                    expenseView.amount)
+                viewModel.makeExpense(
+                    expenseView.name,
+                    expenseView.amount.toLong()
+                )
             }
         }
     }
