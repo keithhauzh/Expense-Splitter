@@ -39,7 +39,7 @@ class ExpensesAdapter (
 
             etAmount.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    expenses[position].amount = s.toString().toFloatOrNull() ?: 0.0f
+                    expenses[position].amount = s.toString().toLongOrNull()?:0
                 }
                 override fun beforeTextChanged(
                     s: CharSequence?,
@@ -91,6 +91,6 @@ class ExpensesAdapter (
 
     data class ExpenseView (
         var name: String = "",
-        var amount: Float = 0.0f
+        var amount: Long = 0
     )
 }

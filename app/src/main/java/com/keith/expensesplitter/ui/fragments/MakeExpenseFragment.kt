@@ -2,31 +2,28 @@ package com.keith.expensesplitter.ui.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.keith.expensesplitter.data.model.Expense
 import com.keith.expensesplitter.databinding.FragmentMakeExpenseBinding
 import com.keith.expensesplitter.ui.adapters.ExpensesAdapter
-import com.keith.expensesplitter.ui.view_models.MakeExpenseViewModel
 import kotlinx.coroutines.launch
 import com.keith.expensesplitter.R
+import com.keith.expensesplitter.ui.view_models.ActivityViewModel
+import com.keith.expensesplitter.ui.view_models.GroupCreationViewModel
+import com.keith.expensesplitter.ui.view_models.MakeExpenseViewModel
 
 class MakeExpenseFragment : Fragment() {
     private lateinit var binding: FragmentMakeExpenseBinding
-    private val args: MakeExpenseFragmentArgs by navArgs()
-    private val groupId: Long get() = args.groupId
-    private val viewModel: MakeExpenseViewModel by viewModels {
-        MakeExpenseViewModel.Factory
-    }
+    private val viewModel: MakeExpenseViewModel by viewModels()
+    private val activityViewModel: ActivityViewModel by activityViewModels()
     private lateinit var adapter: ExpensesAdapter
 
     override fun onCreateView(
@@ -45,6 +42,7 @@ class MakeExpenseFragment : Fragment() {
         setupAdapter()
         error()
         setupClickListeners()
+        observeExpensesCreation()
         adapter.makeExpense(ExpensesAdapter.ExpenseView())
     }
 
@@ -75,17 +73,26 @@ class MakeExpenseFragment : Fragment() {
     private fun savingExpenses(expenses: List<ExpensesAdapter.ExpenseView>) {
         lifecycleScope.launch {
             expenses.forEach { expenseView ->
-                val expense = Expense(
-                    name = expenseView.name,
-                    amount = expenseView.amount,
-                    groupId = groupId
-                )
-                viewModel.makeExpense(expense)
+                viewModel.makeExpense(expenseView.name, expenseView.amount)
             }
-            val action = MakeExpenseFragmentDirections
-                .actionMakeExpenseFragmentToMakePersonFragment(groupId = groupId)
-            findNavController().navigate(action)
         }
+    }
+
+    private fun observeExpensesCreation() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.expenses.collect { expenses ->
+                expenses?.let {
+                    activityViewModel.holdExpenses(it)
+                    navigateToMakePeople()
+                }
+            }
+        }
+    }
+
+    private fun navigateToMakePeople(){
+        val action = MakeExpenseFragmentDirections
+            .actionMakeExpenseFragmentToMakePersonFragment()
+        findNavController().navigate(action)
     }
 
     private fun atLeastOneExpense() {

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,16 +17,15 @@ import com.keith.expensesplitter.databinding.FragmentMakePersonBinding
 import com.keith.expensesplitter.ui.adapters.PeopleAdapter
 import com.keith.expensesplitter.R
 import com.keith.expensesplitter.data.model.Person
+import com.keith.expensesplitter.ui.view_models.ActivityViewModel
+import com.keith.expensesplitter.ui.view_models.GroupCreationViewModel
 import com.keith.expensesplitter.ui.view_models.MakePersonViewModel
 import kotlinx.coroutines.launch
 
 class MakePersonFragment: Fragment() {
     private lateinit var binding: FragmentMakePersonBinding
-    private val args: MakePersonFragmentArgs by navArgs()
-    private val groupId: Long get() = args.groupId
-    private val viewModel: MakePersonViewModel by viewModels {
-        MakePersonViewModel.Factory
-    }
+    private val viewModel: MakePersonViewModel by viewModels()
+    private val activityViewModel: ActivityViewModel by activityViewModels()
 
     private lateinit var adapter: PeopleAdapter
 
@@ -73,25 +73,28 @@ class MakePersonFragment: Fragment() {
             }
         }
     }
-
     private fun savingPeople(people: List<PeopleAdapter.PersonView>){
         lifecycleScope.launch {
             people.forEach { personView ->
-                val person = Person(
-                    name = personView.name,
-                    groupId = groupId
-                )
-                viewModel.makePerson(person)
-                findNavController().popBackStack(R.id.homeFragment, false)
-                val snackbar = Snackbar.make(binding.root,
-                    "Group has been made",
-                    Snackbar.LENGTH_LONG)
-                snackbar.setBackgroundTint(
-                    ContextCompat.getColor(requireContext(), R.color.white)
-                )
-                snackbar.show()
+                viewModel.makePerson(personView.name)
+            }
+            finish()
+        }
+    }
+
+    private fun observePeopleCreation() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.people.collect { people ->
+                people?.let {
+                    activityViewModel.holdPeople(it)
+                    complete()
+                }
             }
         }
+    }
+
+    private fun complete(){
+
     }
 
     private fun ifPeopleEmpty(){
@@ -104,6 +107,15 @@ class MakePersonFragment: Fragment() {
             ContextCompat.getColor(requireContext(), R.color.green)
         )
         snackbar.show()
+    }
+
+    private fun finish() {
+        viewModel.complete()
+        findNavController().popBackStack(
+            R.id.homeFragment,
+            false
+        )
+        success()
     }
 
     private fun success() {
