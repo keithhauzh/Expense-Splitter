@@ -8,11 +8,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.keith.expensesplitter.R
+import java.text.DecimalFormat
 
 class ExpensesAdapter (
     private val onRemoveClick: (Int) -> Unit
 ): RecyclerView.Adapter<ExpensesAdapter.ExpenseViewHolder>() {
     private val expenses = mutableListOf<ExpenseView>()
+    private val decimalFormat = DecimalFormat("#.##")
 
     inner class ExpenseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val etName : EditText = itemView.findViewById(R.id.etName)
@@ -21,7 +23,7 @@ class ExpensesAdapter (
 
         fun bind(expense: ExpenseView, position: Int) {
             etName.setText(expense.name)
-            etAmount.setText(expense.amount.toString())
+            etAmount.setText(decimalFormat.format(expense.amount).toString())
 
             etName.addTextChangedListener(object: TextWatcher{
                 override fun afterTextChanged(s: Editable?) {
@@ -39,7 +41,7 @@ class ExpensesAdapter (
 
             etAmount.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    expenses[position].amount = s.toString().toFloatOrNull() ?: 0.0f
+                    expenses[position].amount = s.toString().toFloatOrNull()?:0.0f
                 }
                 override fun beforeTextChanged(
                     s: CharSequence?,

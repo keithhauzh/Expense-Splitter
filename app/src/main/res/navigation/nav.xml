@@ -27,6 +27,24 @@
             android:id="@+id/action_makeGroupFragment_to_makeExpenseFragment"
             app:destination="@id/makeExpenseFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/makeExpenseFragment"
+        android:name="com.keith.expensesplitter.ui.fragments.MakeExpenseFragment"
+        android:label="fragment_make_expense"
+        tools:layout="@layout/fragment_make_expense" >
+        <action
+            android:id="@+id/action_makeExpenseFragment_to_makePersonFragment"
+            app:destination="@id/makePersonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/makePersonFragment"
+        android:name="com.keith.expensesplitter.ui.fragments.MakePersonFragment"
+        android:label="fragment_make_person"
+        tools:layout="@layout/fragment_make_person" >
+        <action
+            android:id="@+id/action_makePersonFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/previousGroupsFragment"
@@ -44,39 +62,22 @@
             app:destination="@id/editGroupDialogFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/makeExpenseFragment"
-        android:name="com.keith.expensesplitter.ui.fragments.MakeExpenseFragment"
-        android:label="fragment_make_expense"
-        tools:layout="@layout/fragment_make_expense" >
-        <action
-            android:id="@+id/action_makeExpenseFragment_to_makePersonFragment"
-            app:destination="@id/makePersonFragment" />
-        <argument android:name="groupId" app:argType="long" />
-    </fragment>
 
-    <fragment
-        android:id="@+id/makePersonFragment"
-        android:name="com.keith.expensesplitter.ui.fragments.MakePersonFragment"
-        android:label="fragment_make_person"
-        tools:layout="@layout/fragment_make_person" >
-        <action
-            android:id="@+id/action_makePersonFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <argument android:name="groupId" app:argType="long"/>
-    </fragment>
     <fragment
         android:id="@+id/displayGroup"
         android:name="com.keith.expensesplitter.ui.fragments.DisplayGroupFragment"
         android:label="fragment_display_group"
         tools:layout="@layout/fragment_display_group" >
-        <argument android:name="groupId" app:argType="long"/>
+        <argument android:name="groupId"
+            app:argType="long"
+            />
     </fragment>
     <fragment
         android:id="@+id/editGroupDialogFragment"
         android:name="com.keith.expensesplitter.ui.fragments.EditGroupDialogFragment"
         android:label="fragment_edit_group_dialog"
         tools:layout="@layout/fragment_edit_group_dialog" >
-        <argument android:name="groupId" app:argType="long"/>
+        <argument android:name="groupId"
+            app:argType="long" />
     </fragment>
 </navigation>

@@ -17,6 +17,6 @@ data class Expense (
     @PrimaryKey(autoGenerate = true)
     val id: Long? = null,
     val name: String,
-    val amount: Float,
+    val amount: Long,
     val groupId: Long
 )
