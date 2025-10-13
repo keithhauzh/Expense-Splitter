@@ -18,7 +18,6 @@ class GroupsAdapter (
     private var onClick: (Group) -> Unit,
     private var viewModel: PreviousGroupsViewModel
 ): RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>() {
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -79,7 +78,7 @@ class GroupsAdapter (
             binding.run {
                 tvName.text = group.name
                 tvDetails.text = group.details
-                tvTotal.text = group.totalAmount.toString()
+                tvTotal.text = String.format("$${group.totalAmount}")
                 Log.d("amount", group.totalAmount.toString())
                 ivEdit.setOnClickListener {
                     showEditDialog(group.id, binding.root)
