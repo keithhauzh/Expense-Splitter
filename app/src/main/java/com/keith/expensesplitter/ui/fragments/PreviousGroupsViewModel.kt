@@ -1,8 +1,5 @@
 package com.keith.expensesplitter.ui.fragments
 
-import android.util.Log
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -23,10 +20,20 @@ class PreviousGroupsViewModel (
     private val _groups = MutableStateFlow<List<Group>>(emptyList())
     val groups = _groups.asStateFlow()
 
-    fun getGroups() {
+    fun getGroups(min: String = "") {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.getAllGroups().let { groups ->
+            if(min != ""){
+                val groups = mutableListOf<Group>()
+                repo.getAllGroups().forEach { group ->
+                    if(group.totalAmount >= min.toLong()){
+                        groups.add(group)
+                    }
+                }
                 _groups.value = groups
+            }else{
+                repo.getAllGroups().let { groups ->
+                    _groups.value = groups
+                }
             }
         }
     }

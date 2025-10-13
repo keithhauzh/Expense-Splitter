@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -7,39 +7,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.PreviousGroupsFragment">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvGroups"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            />
-        <LinearLayout
-            android:id="@+id/llEmpty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
+        <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
             >
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:src="@drawable/nothing"
-                android:layout_marginBottom="16dp"
-                android:contentDescription="@string/no_groups"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
+                    <EditText
+                        android:id="@+id/etMin"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_bg"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:hint="@string/minimum_amount_sort"
+                        />
+                    <ImageView
+                        android:id="@+id/ivSort"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/sort"
+                        android:layout_margin="5dp"
+                        />
+                </LinearLayout>
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGroups"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/you_haven_t_made_any_expense_groups_yet"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"
-                />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbMake"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/make_an_expense_group"
-                style="@style/BAWButton"
-                />
-        </LinearLayout>
-</FrameLayout>
+            <LinearLayout
+                android:id="@+id/llEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:src="@drawable/nothing"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@string/no_groups"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/you_haven_t_made_any_expense_groups_yet"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="16dp"
+                    />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mbMake"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/make_an_expense_group"
+                    style="@style/BAWButton"
+                    />
+            </LinearLayout>
+        </FrameLayout>
+</LinearLayout>

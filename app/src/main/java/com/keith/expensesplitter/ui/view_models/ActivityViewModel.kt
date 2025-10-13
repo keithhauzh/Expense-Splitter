@@ -52,7 +52,8 @@ class ActivityViewModel(
                     val groupId = groupsRepo.makeGroup(
                         Group(
                             name = group.name,
-                            details = group.details
+                            details = group.details,
+                            totalAmount = _expenses.value.sumOf { it.amount }
                         )
                     )
                     completeExpenses(groupId)

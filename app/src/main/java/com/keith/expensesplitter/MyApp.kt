@@ -17,6 +17,7 @@ class MyApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
+        deleteDatabase(MyDatabase.NAME)
 
         DynamicColors.applyToActivitiesIfAvailable(this)
 

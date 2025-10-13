@@ -15,7 +15,6 @@ class MakeExpenseViewModel: ViewModel() {
     private val _expenses = MutableStateFlow<List<oneExpense>>(emptyList())
     val expenses = _expenses.asStateFlow()
     private val _finish = MutableSharedFlow<List<oneExpense>>()
-    val finish = _finish.asSharedFlow()
     private val _error = MutableSharedFlow<String>()
     val error = _error.asSharedFlow()
 
