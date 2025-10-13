@@ -9,6 +9,7 @@ data class Group (
     val id: Long? = null,
     val name: String,
     val details: String? = "No Details",
+    val totalAmount: Long = 0
 )
 
 

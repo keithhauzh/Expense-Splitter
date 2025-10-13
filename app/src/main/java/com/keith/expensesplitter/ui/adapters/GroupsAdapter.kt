@@ -79,6 +79,8 @@ class GroupsAdapter (
             binding.run {
                 tvName.text = group.name
                 tvDetails.text = group.details
+                tvTotal.text = group.totalAmount.toString()
+                Log.d("amount", group.totalAmount.toString())
                 ivEdit.setOnClickListener {
                     showEditDialog(group.id, binding.root)
                 }

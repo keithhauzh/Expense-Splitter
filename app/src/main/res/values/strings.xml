@@ -31,4 +31,5 @@
     <string name="number_of_people">Number of People:</string>
     <string name="test">test</string>
     <string name="done_complete_group">Done (Complete Group)</string>
+    <string name="minimum_amount_sort">Minimum Amount Sort ($)</string>
 </resources>
